@@ -95,7 +95,7 @@ app.get('/bewegingen/:id', function (request, response) {
     });
 });
 
-// opvangen van een POST op /locaties.
+// opvangen van een POST op /bewegingen.
 app.post("/bewegingen", function(request, response) {
     // de data in de body wordt toegekend aan onze locatie variabele.
     // deze is enkel opgevuld indien het JSON is.
@@ -113,6 +113,48 @@ app.post("/bewegingen", function(request, response) {
             throw err;
         }
         response.send(beweging);
+    });
+});
+
+// opvangen van een GET op /aanwezigheden
+app.get('/aanwezigheden', function (request, response) {
+    dalAanwezig.AllAanwezigheden(function (err, aanwezig) {
+        if(err){
+            throw err;
+        }
+        response.send(aanwezig);
+    });
+});
+
+// opvangen van een GET op /aanwezigheden/:ID
+app.get('/aanwezigheden/:id', function (request, response) {
+    dalAanwezig.findAanwezigheden(request.params.id, function (err, aanwezig) {
+        if (aanwezig) {
+        response.send(aanwezig);
+    } else {
+        err;
+    }
+    });
+});
+
+// opvangen van een POST op /aanwezigheden.
+app.post("/aanwezigheden", function(request, response) {
+    // de data in de body wordt toegekend aan onze locatie variabele.
+    // deze is enkel opgevuld indien het JSON is.
+    var personen = request.body;
+    // Valideren dat velden bestaan
+    var errors = validationaanwezigheden.fieldsNotEmpty(personen, "ID", "naam_drone", "aantal", "naam_locatie", "uur");
+    if (errors) {
+        response.status(400).send({
+            msg: "Volgende velden zijn verplicht of fout: " + errors.concat()
+        });
+        return;
+    }
+    dalAanwezig.saveAanwezigheden(personen, function(err, personen) {
+        if(err){
+            throw err;
+        }
+        response.send(personen);
     });
 });
 

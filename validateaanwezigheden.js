@@ -2,6 +2,10 @@ module.exports = {
     fieldsNotEmpty: function (object) {
         var errors = [];
         var i = 1;
+        if(typeof object["ID"] != "number"){
+            errors.push(arguments[i]);
+        }
+        i++
         if(object["naam_drone"] == "" || typeof object["naam_drone"] != "string"){
             errors.push(arguments[i])
         }
