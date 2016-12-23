@@ -3,6 +3,10 @@ module.exports = {
         "beweging"
         var errors = [];
         var i = 1;
+        if(typeof object["bewegingid"] != "number"){
+            errors.push(arguments[i]);
+        }
+        i++
         if(typeof object["beginlocatie"] != "object"){
             errors.push(arguments[i])
         }

@@ -6,22 +6,22 @@ var bewegingSchema = mongoose.Schema({
                 unique: true
             },
             beginlocatie: {
-                type: Object,
-                required: true
+                naam_drone: { type: String },
+                datum_vertrek: { type: Date}
             },
             eindlocatie: {
-                type: Object,
-                required: true
+                naam_drone: { type: String },
+                datum_aankomst: { type: Date}
             },
             duur: {
-                type: String,
+                type: Number,
                 required: true
             },
             weer: {
                 type: String
             },
             beweging: {
-                type: String,
+                type: Boolean,
                 required: true
             }
 });
