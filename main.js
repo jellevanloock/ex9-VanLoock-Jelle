@@ -3,7 +3,7 @@ var express = require('express'); // eenvoudige webserver in node js
 var parser = require('body-parser'); // extensie op express voor eenvoudig body uit te lezen
 var mongoose = require('mongoose'); // Aangeraden door Jonas Cristens (andere package dan MongoClient)
 
-mongoose.connect('mongodb://localhost:27017/MijnAPI');
+mongoose.connect('mongodb://localhost:27017/MijnAPI'); //Databank dat je raadpleegt in Robomongo
 
 // onze lokale 'datastore'. deze variable bewaart onze state.
 var dalLocatie = require('./storagelocaties.js');
@@ -27,10 +27,11 @@ app.get('/locaties', function (request, response) {
 // opvangen van een GET op /locaties/:naam_drone
 app.get('/locaties/:id', function (request, response) {
     dalLocatie.findLocaties(request.params.id, function (err, locatie) {
-        if(err){
-            throw err;
-        }
+        if (locatie) {
         response.send(locatie);
+    } else {
+        err;
+    }
     });
 });
 
@@ -61,7 +62,7 @@ app.post("/locaties", function(request, response) {
     */
     dalLocatie.saveLocaties(locatie, function(err, locatie) {
         if(err){
-            throw err
+            throw err;
         }
         response.send(locatie);
     });
