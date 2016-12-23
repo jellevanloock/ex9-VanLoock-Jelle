@@ -12,6 +12,9 @@ var validationlocaties = require('./validatelocaties.js');
 var dalBeweging = require('./storagebewegingen.js');
 var validationbewegingen = require('./validatebewegingen.js');
 
+var dalAanwezig = require('./storageaanwezigheden.js');
+var validationaanwezigheden = require('./validateaanwezigheden');
+
 // aanmaken van de webserver variabele
 var app = express();
 // automatische json-body parsers van request MET media-type application/json gespecifieerd in de request.
