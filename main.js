@@ -9,6 +9,9 @@ mongoose.connect('mongodb://localhost:27017/MijnAPI'); //Databank dat je raadple
 var dalLocatie = require('./storagelocaties.js');
 var validationlocaties = require('./validatelocaties.js');
 
+var dalBeweging = require('./storagebewegingen.js');
+var validationbewegingen = require('./validatebewegingen.js');
+
 // aanmaken van de webserver variabele
 var app = express();
 // automatische json-body parsers van request MET media-type application/json gespecifieerd in de request.
@@ -65,6 +68,27 @@ app.post("/locaties", function(request, response) {
             throw err;
         }
         response.send(locatie);
+    });
+});
+
+// opvangen van een GET op /bewegingen
+app.get('/bewegingen', function (request, response) {
+    dalBeweging.AllBewegingen(function (err, beweging) {
+        if(err){
+            throw err;
+        }
+        response.send(beweging);
+    });
+});
+
+// opvangen van een GET op /bewegingen/:bewegingid
+app.get('/bewegingen/:id', function (request, response) {
+    dalBeweging.findBewegingen(request.params.id, function (err, beweging) {
+        if (beweging) {
+        response.send(beweging);
+    } else {
+        err;
+    }
     });
 });
 
